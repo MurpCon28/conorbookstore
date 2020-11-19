@@ -15,7 +15,7 @@
                     @endif
 
                     {{-- {{ __('You are logged in!') }} --}}
-                    You are logged in as an admin.
+                    You are logged in as an admin. <a href="{{ route('admin.books.index') }}"> Books </a>
                 </div>
             </div>
         </div>
