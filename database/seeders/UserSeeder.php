@@ -33,5 +33,47 @@ class UserSeeder extends Seeder
         $user->password = Hash::make('secret');
         $user->save();
         $user->roles()->attach($role_user);
+
+        // $customer = new Customer();
+        // $customer->address = '123 Fake Street';
+        // $customer->phone = '025984554';
+        // $customer->user_id = $user->id;
+        // $customer->save();
+
+
+        $user = new User();
+        $user->name = 'Beth Kelly';
+        $user->email = 'beth@conorbookstore.ie';
+        $user->password = Hash::make('secret');
+        $user->save();
+        $user->roles()->attach($role_user);
+
+        $user = new User();
+        $user->name = 'Luke Bob';
+        $user->email = 'luke@conorbookstore.ie';
+        $user->password = Hash::make('secret');
+        $user->save();
+        $user->roles()->attach($role_user);
+
+        $user = new User();
+        $user->name = 'Ruth West';
+        $user->email = 'ruth@conorbookstore.ie';
+        $user->password = Hash::make('secret');
+        $user->save();
+        $user->roles()->attach($role_user);
+
+        $user = new User();
+        $user->name = 'Nick East';
+        $user->email = 'nick@conorbookstore.ie';
+        $user->password = Hash::make('secret');
+        $user->save();
+        $user->roles()->attach($role_user);
+
+        $user = new User();
+        $user->name = 'Rebbeca North';
+        $user->email = 'rebecca@conorbookstore.ie';
+        $user->password = Hash::make('secret');
+        $user->save();
+        $user->roles()->attach($role_user);
     }
 }
