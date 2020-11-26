@@ -62,7 +62,7 @@ class BookController extends Controller
           'title' => 'required|max:191',
           'author' => 'required|max:191',
           'publisher_id' => 'required',
-          'year' => 'required|integer|min:1900',
+          'year' => 'required|integer|min:1700',
           'isbn' => 'required|alpha_num|size:13|unique:books,isbn',
           'price' => 'required|numeric|min:0'
         ]);
@@ -75,6 +75,8 @@ class BookController extends Controller
         $book->isbn = $request->input('isbn');
         $book->price = $request->input('price');
         $book->save();
+
+        $request->session()->flash('success', 'Book added successfuly');
 
         return redirect()->route('admin.books.index');
 
@@ -126,7 +128,7 @@ class BookController extends Controller
         'title' => 'required|max:191',
         'author' => 'required|max:191',
         'publisher_id' => 'required',
-        'year' => 'required|integer|min:1900',
+        'year' => 'required|integer|min:1700',
         'isbn' => 'required|alpha_num|size:13|unique:books,isbn,' . $id,
         'price' => 'required|numeric|min:0'
       ]);
@@ -140,6 +142,8 @@ class BookController extends Controller
       $book->price = $request->input('price');
       $book->save();
 
+      $request->session()->flash('info', 'Book edited successfuly');
+
       return redirect()->route('admin.books.index');
 
     }
@@ -150,10 +154,12 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $book = Book::findOrFail($id);
         $book->delete();
+
+        $request->session()->flash('danger', 'Book deleted successfuly');
 
         return redirect()->route('admin.books.index');
     }
