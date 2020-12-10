@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    This is the about page!
+                    This is the about page! <a href="{{ route('welcome') }}"> back </a>
                 </div>
             </div>
         </div>
