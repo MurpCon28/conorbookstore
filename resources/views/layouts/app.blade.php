@@ -33,7 +33,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        {{-- <li class="nav-item active">
+                          <a class="nav-link" href="{{ url('books') }}">Books <span class="sr-only">(current)</span></a>
+                        </li> --}}
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -79,7 +81,7 @@
                 <div class="flash-message">
                   @foreach(['danger','warning','success','info'] as $key)
                     @if(Session::has($key))
-                      <div class="alert alert-{{$key}}">{{ Session::get($key) }}
+                      <div class="flash alert alert-{{$key}}">{{ Session::get($key) }}
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                       </div>
                     @endif
@@ -93,6 +95,6 @@
     </div>
 </body>
 <script>
-  setTimeout(function(){ $('.alert').alert('close') }, 3000)
+  setTimeout(function(){ $('.flash').alert('close') }, 3000)
 </script>
 </html>

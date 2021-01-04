@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Publisher;
+use Storage;
 
 class BookController extends Controller
 {
@@ -62,12 +63,24 @@ class BookController extends Controller
           'title' => 'required|max:191',
           'author' => 'required|max:191',
           'publisher_id' => 'required',
+          // 'cover' => 'file|image|dimensions:width=300,height=400',
+          'cover' => 'file|image',
           'year' => 'required|integer|min:1700',
           'isbn' => 'required|alpha_num|size:13|unique:books,isbn',
           'price' => 'required|numeric|min:0'
         ]);
 
         $book = new Book();
+
+        if ($request->hasFile('cover')) {
+          $cover = $request->file('cover');
+          $extension = $cover->getClientOriginalExtension();
+          $filename = date('Y-m-d-His') . '_' . $request->input('isbn') . '.' . $extension;
+
+          $path = $cover->storeAs('public/covers', $filename);
+          $book->cover = $filename;
+        }
+
         $book->title = $request->input('title');
         $book->author = $request->input('author');
         $book->publisher_id = $request->input('publisher_id');
@@ -128,12 +141,24 @@ class BookController extends Controller
         'title' => 'required|max:191',
         'author' => 'required|max:191',
         'publisher_id' => 'required',
+        // 'cover' => 'file|image|dimensions:width=300,height=400',
+        'cover' => 'file|image',
         'year' => 'required|integer|min:1700',
         'isbn' => 'required|alpha_num|size:13|unique:books,isbn,' . $id,
         'price' => 'required|numeric|min:0'
       ]);
 
       $book = Book::findOrFail($id);
+
+      if ($request->hasFile('cover')) {
+        $cover = $request->file('cover');
+        $extension = $cover->getClientOriginalExtension();
+        $filename = date('Y-m-d-His') . '_' . $request->input('isbn') . '.' . $extension;
+
+        $path = $cover->storeAs('public/covers', $filename);
+        $book->cover = $filename;
+      }
+
       $book->title = $request->input('title');
       $book->author = $request->input('author');
       $book->publisher_id = $request->input('publisher_id');
@@ -157,6 +182,7 @@ class BookController extends Controller
     public function destroy(Request $request, $id)
     {
         $book = Book::findOrFail($id);
+        Storage::delete("public/covers/{$book->cover}");
         $book->delete();
 
         $request->session()->flash('danger', 'Book deleted successfuly');
